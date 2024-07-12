@@ -30,11 +30,14 @@ def find(name, path):
 def getBsvPackages(bluespecdir):
     """BLUESPECDIR is expected to be the path to the bluespec distribution.
     The function GETBSVPACKAGES returns a list of all
-    the packages in the prelude library of this distribution.
+    the packages in the Libraries of this distribution.
     """
     pkgs = []
-    for f in glob.glob('%s/Prelude/*.bo' % bluespecdir):
+    for f in glob.glob('%s/Libraries/*.bo' % bluespecdir):
         pkgs.append(os.path.splitext(os.path.basename(f))[0])
+    if 'BSC_CONTRIB_DIR' in os.environ:
+        for f in glob.glob('%s/Libraries/FPGA/**/*.bo' % os.environ['BSC_CONTRIB_DIR']):
+            pkgs.append(os.path.splitext(os.path.basename(f))[0])
     return pkgs
 
 

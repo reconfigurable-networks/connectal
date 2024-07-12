@@ -29,11 +29,14 @@ import bsvpreprocess
 def getBsvPackages(bluespecdir):
     """BLUESPECDIR is expected to be the path to the bluespec distribution.
     The function GETBSVPACKAGES returns a list of all
-    the packages in the prelude library of this distribution.
+    the packages in the libraries of this distribution.
     """
     pkgs = []
-    for f in glob.glob('%s/Prelude/*.bo' % bluespecdir):
+    for f in glob.glob('%s/Libraries/*.bo' % bluespecdir):
         pkgs.append(os.path.splitext(os.path.basename(f))[0])
+    if 'BSC_CONTRIB_DIR' in os.environ:
+        for f in glob.glob('%s/Libraries/FPGA/**/*.bo' % os.environ['BSC_CONTRIB_DIR']):
+            pkgs.append(os.path.splitext(os.path.basename(f))[0])
     return pkgs
 
 def bsvDependencies(bsvfile, allBsv=False, bluespecdir=None, argbsvpath=[], bsvdefine=[]):
@@ -45,7 +48,7 @@ def bsvDependencies(bsvfile, allBsv=False, bluespecdir=None, argbsvpath=[], bsvd
     The boolean ALLBSV will generate entries for all
     BSV files on path.
 
-    The string BLUESPECDIR will add the Prelude of
+    The string BLUESPECDIR will add the Libraries of
     Bsv in packages.
 
     The BSVDEFINE argument is passed to the

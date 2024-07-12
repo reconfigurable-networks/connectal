@@ -59,6 +59,7 @@ import PcieEndpointS5    :: *;
 `endif
 `endif
 import HostInterface     :: *;
+import PCIE::* ;
 
 `ifdef XILINX_SYS_CLK
 `define SYS_CLK_PARAM Clock sys_clk_p, Clock sys_clk_n,

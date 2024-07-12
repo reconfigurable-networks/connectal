@@ -107,8 +107,8 @@ if __name__=='__main__':
             if boardPinInfo.has_key(pinName):
                 pinInfo = copy.copy(boardPinInfo[pinName])
             else:
-                print('Missing pin description for', pin, pinName, projectPinInfo, file=sys.stderr)
-                pinInfo['PACKAGE_PIN'] = 'fmc.%s' % (pinName)
+                print('Missing pin description for', pinName, projectPinInfo, file=sys.stderr)
+                pinInfo['LOC'] = 'fmc.%s' % (pinName)
                 errorDetected = True
             pinInfo[u'name'] = pin
             for prop in projectPinInfo:
@@ -121,7 +121,7 @@ if __name__=='__main__':
                 print(template)
                 print(pinInfo)
             for k in pinInfo:
-                if k in used+['name', 'PACKAGE_PIN', 'PIO_DIRECTION']: continue
+                if k in used+['name', 'LOC', 'PIO_DIRECTION']: continue
                 out.write(setPropertyTemplate % {
                         'name': pin,
                         'prop': k,
